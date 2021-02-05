@@ -1,0 +1,70 @@
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb,amsthm,commath,mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage[english]{babel}
+\usepackage{subcaption}
+\usepackage{graphicx}
+
+\usepackage{opexpl}
+\usepackage{parskip}
+
+\usepackage{hyperref}
+
+\author{Vincent Kuhlmann}
+\title{Opexpl demonstration}
+\begin{document}
+	\maketitle
+
+\section{In center of mass frame}
+	In the center of mass there is
+\begin{align*}
+	&m_1v_{1,m} + m_2v_{2,m} = 0\\
+	&m_1v_{1,m}^2 + m_2v_{2,m}^2 = 2\dfrac{m_1m_2^2gd + m_1^2m_2gd}{(m_1 + m_2)^2}.
+\end{align*}
+
+	From this we solve
+\begin{align*}
+	&\hphantom{{}\implies{}}{}m_2^2v_{2,m}^2/m_1 + m_2v_{2,m}^2 = 2\dfrac{m_1m_2^2gd + m_1^2m_2gd}{(m_1 + m_2)^2}\\
+	&\implies v_{2,m}^2 = \dfrac{2}{m_2^2/m_1 + m_2}\dfrac{m_1m_2^2gd + m_1^2m_2gd}{(m_1 + m_2)^2}\\
+	%		&\implies v_{2,m} = \dfrac{\sqrt{m_1^2m_2^2 + m_1^3m_2}\sqrt{2gd}}{\sqrt{m_2^2 + m_2m_1}\left(m_1 + m_2\right)}\\
+	&\optag{op:posRootv2m}\implies v_{2,m} = \dfrac{m_1}{m_1 + m_2}\sqrt{2gd}\dfrac{\sqrt{m_1m_2^2 + m_1^2m_2}}{\sqrt{m_1m_2^2 + m_1^2m_2}} = \dfrac{m_1}{m_1 + m_2}\sqrt{2gd}\\
+	&\implies v_{2,m} - v_{1,m} = \left(1 + m_2/m_1\right)\dfrac{m_1}{m_1 + m_2}\sqrt{2gd}\\
+	&\implies v_{2,m} - v_{1,m} = \sqrt{2gd}.
+\end{align*}
+\opexpl{op:posRootv2m}{We can't have $ v_{2,m} < 0 $, because conservation of momentum would imply $ v_{1,m} \geq 0 > v_{2,m} $, meaning particle~1 goes right through particle~2. This is not allowed here.}
+
+%	\begin{OpExplMult}
+%		\ExplItem aa
+%	\end{OpExplMult}
+
+%	\begin{align*}
+%		&\implies v_{2,m} - v_{1,m} = \dfrac{m_1 + m_2}{m_1}\dfrac{\sqrt{m_1^2m_2^2 + m_1^3m_2}\sqrt{2gd}}{\sqrt{m_2^2 + m_2m_1}\left(m_1 + m_2\right)}\\
+%		&\implies v_{1,m} + v_{2,m} = \left(m_1 - m_2\right)\dfrac{\sqrt{m_2 + m_1}}{\sqrt{m_2 + m_1}}\dfrac{\sqrt{2gd}}{m_1 + m_2}\\
+%		&\implies v_{1,m} + v_{2,m} = \dfrac{m_1 - m_2}{m_1 + m_2}\sqrt{2gd}.
+%	\end{align*}
+
+This is the relative speed between the particles.
+
+\section{In restframe of particle 2 before collision}
+We see
+\begin{align*}
+	&m_1v_1^2 + m_2v_2^2 = 2m_1gd\\
+	&m_1v_1 + m_2v_2 = m_1\sqrt{2gd}\\
+	&\implies m_2v_2^2 + \dfrac{1}{m_1}\left(m_1\sqrt{2gd} - m_2v_2\right)^2 = 2m_1gd\\
+	&\implies m_1m_2v_2^2 - 2m_1m_2\sqrt{2gd}v_2 + m_2^2v_2^2 = 0\\
+	&\implies (v_2 = 0)\mbox{ of }\left(v_2(m_1 + m_2) = 2m_1\sqrt{2gd}\right)\\
+	&\optag{op:posv2}\implies v_2(m_1 + m_2) = 2m_1\sqrt{2gd}.
+\end{align*}
+\opexpl{op:posv2}{We need $ v_2 > 0 $ because of conservation of momentum, and the fact particle~1 can't go right through particle~2.}
+
+	This yields
+\begin{align*}
+	&v_2 - v_1 = (1 + m_2/m_1)v_2 - \dfrac{1}{m_1}\left(m_1v_1 + m_2v_2\right)\\
+	&\implies v_2 - v_1 = (1 + m_2/m_1)v_2 - \sqrt{2gd}\\
+	&\implies %(v_2 - v_1 = -\sqrt{2gd})\mbox{ of }
+	v_2 - v_1 = 2\sqrt{2gd} - \sqrt{2gd} = \sqrt{2gd}.
+\end{align*}
+
+\end{document}
