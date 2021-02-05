@@ -1,0 +1,100 @@
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{inlineheaders}[2020/10/17]
+
+\RequirePackage{greekctr}
+\RequirePackage{refcount}
+\RequirePackage{pbox}
+
+% Vincent Kuhlmann
+
+\newlength\stextwidth
+\newcommand\makesamewidth[3][c]{%
+	\settowidth{\stextwidth}{#2}%
+	\makebox[\stextwidth][#1]{#3}%
+}
+
+%\newcommand*{\OpDimplWExpl}[1]{\stackrel{\raisebox{0.3em}{$\scriptstyle(#1)$}}{\iff}}
+%\newcommand*{\OpEqWExplOld}[1]{\stackrel{\raisebox{0.3em}{$\scriptstyle(#1)$}}{=}}
+
+
+%\newcommand*{\OpEqWExpl}[1]{%
+%	%=\rlap{aaa}%\stackrel{\raisebox{0.3em}{$\scriptstyle(aaaaaaaaaaaaa)$}}{=}
+%	%\sbox{\indicTextBox}{\raisebox{0.3em}{$\scriptstyle(aaaaaaaaaaaaa)$}}%
+%	%\stackrel{\usebox{\indicTextBox}}{\makesamewidth[r]{\indicTextBox}{=}}
+%	\def\upperText{\raisebox{0.3em}{$\scriptstyle(#1)$}}%
+%	\stackrel{\upperText}{\makesamewidth[l]{\upperText}{=}}%
+%}
+
+\newsavebox\operatorExplBox
+\newlength\operatorWidth
+\newlength\operatorExplWidth
+\newlength\horizShift
+
+\newcounter{taggedop}
+\setcounter{taggedop}{0}
+
+\protected\def\thetaggedop{(\greek{taggedop})}
+
+\def\@op@label#1{%
+	\ifdefined\ltx@label\relax
+		\ltx@label{#1}%
+		%\@bsphack \protected@write \@auxout {}{\string \newlabel {#1}{{\@currentlabel }{\thepage }}}\@esphack
+	\else
+		\label{#1}%
+	\fi
+}
+
+\newcommand\optag[3][\relax]{%
+	\def\tagname{#1}%
+	\def\autotagname{\relax}%
+	\ifx\tagname\autotagname
+		\refstepcounter{taggedop}\@op@label{#2}%
+		\def\tagname{\thetaggedop}%
+	\else
+		\protected@edef \@currentlabel {\csname p@taggedop\endcsname #1}%
+		\@op@label{#2}%
+	\fi
+%
+	\sbox\operatorExplBox{\ensuremath{\displaystyle\stackrel{\raisebox{0.3em}{$\scriptstyle\tagname$}}{#3}}}%
+	\settowidth\operatorWidth{\ensuremath{\displaystyle{}#3{}}}%
+	\setlength\operatorExplWidth{\wd\operatorExplBox}%
+	\setlength\horizShift{0.5\dimexpr(\operatorWidth-\operatorExplWidth)\relax}%
+	\hspace*{\the\horizShift}%
+	\usebox\operatorExplBox{}%
+}
+
+%\newenvironment{expl}
+
+\newcommand\opexpl[2]{%
+	\begin{flushright}%
+		\scriptsize\ref{#1}\,: \pbox[t]{0.6\linewidth}{#2}%
+	\end{flushright}%
+}
+
+\newcommand\opexplold[2][AA]{%
+	\begin{flushright}%
+		\scriptsize $(#1)$: \pbox[t]{0.6\linewidth}{#2}%
+	\end{flushright}%
+}
+
+\def\expl#1{%
+	\begingroup
+	\refstepcounter{mathOpExpl}\label{SomeLabel}%
+	\def\OpCommand{\OpWExpl{#1}}%
+	\if =#1\relax
+		\def\OpCommand{\OpEqWExpl}%
+	\fi
+	\ifx \iff#1\relax
+		\def\OpCommand{\OpDimplWExpl}%
+	\fi
+	\OpCommand{\greek{mathOpExpl}}%
+	\endgroup
+}
+
+%\newcommand{\OpLabelText}{%
+%	\refstepcounter{mathOpExpl}(\greek{mathOpExpl})%
+%}
+
+%\newcommand{\OpExplRef}[1]{(\greek{#1})}
+
+
